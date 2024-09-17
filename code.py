@@ -57,12 +57,12 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Header for the app
-st.markdown('<p class="header">Gemini LLM Application</p>', unsafe_allow_html=True)
+st.markdown('<p class="header">Andrew AI chat-bot</p>', unsafe_allow_html=True)
 
 # Sidebar for additional controls
 with st.sidebar:
     st.header("Instructions")
-    st.write("Ask any question to the Gemini LLM model and get instant responses.")
+    st.write("Ask any question from Andrew and get instant responses.")
     st.write("The chat history will be displayed below the conversation.")
 
 # Initialize session state for chat history if it doesn't exist
