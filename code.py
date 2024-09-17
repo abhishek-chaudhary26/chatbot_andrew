@@ -18,19 +18,6 @@ def get_gemini_response(question):
     response = chat.send_message(question, stream=True)
     return response
 
-# List of funny jokes
-jokes = [
-    "Why don't scientists trust atoms? Because they make up everything!",
-    "Why did the scarecrow win an award? Because he was outstanding in his field!",
-    "Why did the math book look sad? Because it had too many problems.",
-    "Why don't programmers like nature? It has too many bugs.",
-    "What do you call fake spaghetti? An impasta!"
-]
-
-# Function to get a random joke
-def get_random_joke():
-    return random.choice(jokes)
-
 # Initialize Streamlit app configuration
 st.set_page_config(
     page_title="Andrew The Bot",
@@ -54,21 +41,6 @@ st.markdown("""
             text-align: center;
             margin: 20px;
             font-weight: bold;
-        }
-        /* Chat container */
-        .chat-container {
-            display: flex;
-            flex-direction: column;
-            height: 80vh;
-            max-height: 80vh;
-            overflow-y: auto;
-            background-color: #2D2D2D;
-            border-radius: 10px;
-            padding: 10px;
-            margin: 0 auto;
-            width: 90%;
-            max-width: 800px;
-            margin-bottom: 60px; /* Leave space for input field */
         }
         /* Message bubbles */
         .message {
