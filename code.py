@@ -166,9 +166,7 @@ if submit_button and user_input:
     for chunk in response:
         response_text += chunk.text
 
-    # Add response and random joke
-    random_joke = get_random_joke()
-    st.markdown(f'<div class="message bot-message">{response_text} <br><br> <i>{random_joke}</i></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="message bot-message">{response_text} </div>', unsafe_allow_html=True)
 
 # Auto-scroll to the latest message
 st.markdown('<script>document.querySelector(".chat-container").scrollTop = document.querySelector(".chat-container").scrollHeight;</script>', unsafe_allow_html=True)
