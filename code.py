@@ -173,7 +173,6 @@ if submit_button and user_input:
     # Display thinking animation
     thinking_message = get_random_thinking_message()
     st.markdown(f'<div class="loading-animation">{thinking_message}</div>', unsafe_allow_html=True)
-    st.experimental_rerun()
 
     # Simulate delay
     time.sleep(2)  # 2-second delay before showing the response
