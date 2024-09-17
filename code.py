@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import streamlit as st
 import os
 import google.generativeai as genai
+import random
 import time
 
 # Load environment variables
@@ -16,6 +17,19 @@ chat = model.start_chat(history=[])
 def get_gemini_response(question):
     response = chat.send_message(question, stream=True)
     return response
+
+# List of funny jokes
+jokes = [
+    "Why don't scientists trust atoms? Because they make up everything!",
+    "Why did the scarecrow win an award? Because he was outstanding in his field!",
+    "Why did the math book look sad? Because it had too many problems.",
+    "Why don't programmers like nature? It has too many bugs.",
+    "What do you call fake spaghetti? An impasta!"
+]
+
+# Function to get a random joke
+def get_random_joke():
+    return random.choice(jokes)
 
 # Initialize Streamlit app configuration
 st.set_page_config(
@@ -54,6 +68,7 @@ st.markdown("""
             margin: 0 auto;
             width: 90%;
             max-width: 800px;
+            margin-bottom: 60px; /* Leave space for input field */
         }
         /* Message bubbles */
         .message {
@@ -127,12 +142,12 @@ with st.sidebar:
     st.title("About Andrew The Bot")
     st.markdown("""
         **Andrew The Bot** is an AI-powered chatbot built using the Gemini Pro model. 
-        It can answer various questions and assist with programming problems.
+        It can answer various questions and tell you some funny jokes to lighten the mood.
 
         ### Features:
         - AI text generation with Gemini LLM
-        - Chat interface similar to ChatGPT
-        - Persistent chat history
+        - Real-time response
+        - Funny jokes to brighten your day
 
         Developed by **ABHISHEK**.
     """)
@@ -146,23 +161,15 @@ if st.session_state['first_visit']:
     st.session_state['first_visit'] = False
     st.markdown("""
         <script>
-        alert('Welcome to Andrew The Bot! Ask me anything, and I will do my best to respond.');
+        alert('Welcome to Andrew The Bot! Ask me anything and enjoy some jokes along the way.');
         </script>
     """, unsafe_allow_html=True)
 
 # Header for the app
 st.markdown('<p class="header">Andrew The Bot</p>', unsafe_allow_html=True)
 
-# Initialize session state for chat history if it doesn't exist
-if 'chat_history' not in st.session_state:
-    st.session_state['chat_history'] = []
-
-# Display chat history with dark theme
+# Display chat messages
 st.markdown('<div class="chat-container">', unsafe_allow_html=True)
-for role, text in st.session_state['chat_history']:
-    message_class = "user-message" if role == "You" else "bot-message"
-    st.markdown(f'<div class="message {message_class}">{text}</div>', unsafe_allow_html=True)
-st.markdown('</div>', unsafe_allow_html=True)
 
 # Input section
 with st.form(key='input_form', clear_on_submit=True):
@@ -170,20 +177,26 @@ with st.form(key='input_form', clear_on_submit=True):
     submit_button = st.form_submit_button("Send")
 
 if submit_button and user_input:
-    # Add user input to chat history
-    st.session_state['chat_history'].append(("You", user_input))
+    # Add user input to chat
+    st.markdown(f'<div class="message user-message">{user_input}</div>', unsafe_allow_html=True)
 
-    # Display loading animation while getting response
-    with st.spinner('Getting response...'):
-        st.markdown('<div class="loading-animation">Andrew is thinking...</div>', unsafe_allow_html=True)
-        time.sleep(1)  # Simulate a slight delay for effect
-        response = get_gemini_response(user_input)
+    # Display thinking animation
+    st.markdown('<div class="loading-animation">Andrew is thinking...</div>', unsafe_allow_html=True)
 
-    # Add bot response to the chat history
+    # Simulate delay
+    time.sleep(2)  # 2-second delay before showing the response
+
+    # Get response
+    response = get_gemini_response(user_input)
+
+    # Add bot response to chat
     response_text = ""
     for chunk in response:
         response_text += chunk.text
-        st.session_state['chat_history'].append(("Bot", chunk.text))
+
+    # Add response and random joke
+    random_joke = get_random_joke()
+    st.markdown(f'<div class="message bot-message">{response_text} <br><br> <i>{random_joke}</i></div>', unsafe_allow_html=True)
 
 # Auto-scroll to the latest message
 st.markdown('<script>document.querySelector(".chat-container").scrollTop = document.querySelector(".chat-container").scrollHeight;</script>', unsafe_allow_html=True)
