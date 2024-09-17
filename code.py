@@ -114,7 +114,7 @@ st.markdown("""
         /* Animation for loading */
         .loading-animation {
             font-size: 14px;
-            color: #4A90E2;
+            color: #007BFF;
             text-align: center;
             margin-top: 20px;
             animation: loading 1s infinite;
@@ -138,6 +138,7 @@ with st.sidebar:
         - AI text generation with Gemini LLM
         - Real-time response
         - Funny jokes to brighten your day
+        - Coding problem solving
 
         Developed by **ABHISHEK**.
     """)
