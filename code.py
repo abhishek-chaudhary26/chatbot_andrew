@@ -158,14 +158,14 @@ for role, text in st.session_state['chat_history']:
     st.markdown(f'<div class="message {message_class}">{text}</div>', unsafe_allow_html=True)
 st.markdown('</div>', unsafe_allow_html=True)
 
-# Reset the input after receiving the response
+# Clear input before rendering the text input
 if 'input' not in st.session_state:
     st.session_state['input'] = ""
 
-# Input and submit button (Now using session state correctly)
-user_input = st.text_input("Type your message...", key="input", placeholder="Type here...", label_visibility='collapsed')
+# Input and submit button
+user_input = st.text_input("Type your message...", value=st.session_state['input'], key="input", placeholder="Type here...", label_visibility='collapsed')
 
-if user_input:
+if user_input and st.button("Send"):
     # Add user input to chat history
     st.session_state['chat_history'].append(("You", user_input))
 
