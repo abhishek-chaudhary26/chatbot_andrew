@@ -20,10 +20,10 @@ def get_gemini_response(question):
 st.set_page_config(
     page_title="Gemini Chat",
     page_icon="🤖",
-    layout="wide",
+    layout="centered",  # Ensure the layout is centered for a cleaner look
 )
 
-# Custom CSS for a ChatGPT-like look
+# Custom CSS for a ChatGPT-like look with title at the top
 st.markdown("""
     <style>
         .header {
@@ -31,13 +31,19 @@ st.markdown("""
             color: #0C6EFD;
             text-align: center;
             font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 20px;
         }
         .chat-container {
             display: flex;
             flex-direction: column;
-            height: 80vh;
-            max-height: 80vh;
+            height: 70vh;
+            max-height: 70vh;
             overflow-y: auto;
+            background-color: #F0F2F6;
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 10px;
         }
         .message {
             padding: 10px;
@@ -50,7 +56,7 @@ st.markdown("""
             align-self: flex-end;
         }
         .bot-message {
-            background-color: #F0F2F6;
+            background-color: #FFFFFF;
             align-self: flex-start;
         }
         .input-container {
@@ -78,6 +84,18 @@ st.markdown("""
         }
     </style>
 """, unsafe_allow_html=True)
+
+# Show a welcome modal on app load
+if 'first_visit' not in st.session_state:
+    st.session_state['first_visit'] = True
+
+if st.session_state['first_visit']:
+    st.session_state['first_visit'] = False
+    st.markdown("""
+        <script>
+        alert('Welcome to Gemini Chat! Ask me anything, and I will do my best to respond.');
+        </script>
+    """, unsafe_allow_html=True)
 
 # Header for the app
 st.markdown('<p class="header">Gemini Chat</p>', unsafe_allow_html=True)
