@@ -24,85 +24,92 @@ st.set_page_config(
     layout="centered",
 )
 
-# Custom CSS for dark theme and ChatGPT-like layout, styling, and animations
+# Custom CSS for dark theme and ChatGPT-like layout
 st.markdown("""
     <style>
-        /* Remove extra spacing */
-        .css-18e3th9 {
-            padding-top: 0px;
-            padding-bottom: 0px;
-            padding-left: 0px;
-            padding-right: 0px;
-        }
-        /* Dark theme settings */
+        /* Global settings */
         body {
             background-color: #1E1E1E;
+            color: #FFFFFF;
+            font-family: Arial, sans-serif;
         }
+        /* Header */
         .header {
-            font-size: 36px;
+            font-size: 32px;
             color: #FFFFFF;
             text-align: center;
+            margin: 20px;
             font-weight: bold;
-            margin-top: 10px;
-            margin-bottom: 10px;
         }
+        /* Chat container */
         .chat-container {
             display: flex;
             flex-direction: column;
-            height: 70vh;
-            max-height: 70vh;
+            height: 80vh;
+            max-height: 80vh;
             overflow-y: auto;
-            background-color: #333333;
+            background-color: #2D2D2D;
             border-radius: 10px;
             padding: 10px;
-            margin-bottom: 10px;
-            color: white;
+            margin: 0 auto;
+            width: 90%;
+            max-width: 800px;
         }
+        /* Message bubbles */
         .message {
             padding: 10px;
             margin: 5px;
             border-radius: 10px;
-            max-width: 80%;
+            max-width: 75%;
+            word-wrap: break-word;
         }
         .user-message {
-            background-color: #4A4A4A;
+            background-color: #4A90E2;
+            color: #FFFFFF;
             align-self: flex-end;
-            color: white;
         }
         .bot-message {
-            background-color: #2D2D2D;
+            background-color: #333333;
+            color: #FFFFFF;
             align-self: flex-start;
-            color: white;
         }
+        /* Input section */
         .input-container {
             display: flex;
-            margin-top: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 90%;
+            max-width: 800px;
+            background-color: #2D2D2D;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 0 auto;
         }
         .input-box {
             flex: 1;
             padding: 10px;
             border-radius: 5px;
-            border: 1px solid #ddd;
-            margin-right: 10px;
+            border: 1px solid #444444;
             background-color: #1E1E1E;
-            color: white;
+            color: #FFFFFF;
         }
         .send-button {
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
-            background-color: #0C6EFD;
-            color: white;
+            background-color: #4A90E2;
+            color: #FFFFFF;
             font-weight: bold;
             cursor: pointer;
+            margin-left: 10px;
         }
         .send-button:hover {
-            background-color: #084298;
+            background-color: #357ABD;
         }
         /* Animation for loading */
         .loading-animation {
             font-size: 14px;
-            color: #0C6EFD;
+            color: #4A90E2;
             text-align: center;
             margin-top: 20px;
             animation: loading 1s infinite;
@@ -117,17 +124,16 @@ st.markdown("""
 
 # Sidebar content for app introduction
 with st.sidebar:
-    st.title("Welcome to Andrew The Bot")
+    st.title("About Andrew The Bot")
     st.markdown("""
         **Andrew The Bot** is an AI-powered chatbot built using the Gemini Pro model. 
-        This chatbot can answer a wide variety of questions and assist with code-related problems.
-        
+        It can answer various questions and assist with programming problems.
+
         ### Features:
         - AI text generation with Gemini LLM
         - Chat interface similar to ChatGPT
-        - Easy-to-use text input system
-        - Session-based chat history
-        
+        - Persistent chat history
+
         Developed by **ABHISHEK**.
     """)
     st.info("Developed by ABHISHEK.")
@@ -144,7 +150,7 @@ if st.session_state['first_visit']:
         </script>
     """, unsafe_allow_html=True)
 
-# Header for the app with white color for Andrew The Bot's name
+# Header for the app
 st.markdown('<p class="header">Andrew The Bot</p>', unsafe_allow_html=True)
 
 # Initialize session state for chat history if it doesn't exist
@@ -158,30 +164,26 @@ for role, text in st.session_state['chat_history']:
     st.markdown(f'<div class="message {message_class}">{text}</div>', unsafe_allow_html=True)
 st.markdown('</div>', unsafe_allow_html=True)
 
-# Reset the input after receiving the response
-if 'input' not in st.session_state:
-    st.session_state['input'] = ""
+# Input section
+with st.form(key='input_form', clear_on_submit=True):
+    user_input = st.text_area("Type your message...", "", placeholder="Type here...", key="input_box", height=50)
+    submit_button = st.form_submit_button("Send")
 
-# Input and submit button (Now using a local variable to reset input)
-user_input = st.text_input("Type your message...", value="", placeholder="Type here...", label_visibility='collapsed')
+if submit_button and user_input:
+    # Add user input to chat history
+    st.session_state['chat_history'].append(("You", user_input))
 
-# If user submits input
-if st.button("Send"):
-    if user_input:
-        # Add user input to chat history
-        st.session_state['chat_history'].append(("You", user_input))
+    # Display loading animation while getting response
+    with st.spinner('Getting response...'):
+        st.markdown('<div class="loading-animation">Andrew is thinking...</div>', unsafe_allow_html=True)
+        time.sleep(1)  # Simulate a slight delay for effect
+        response = get_gemini_response(user_input)
 
-        # Display loading animation while getting response
-        with st.spinner('Getting response...'):
-            st.markdown('<div class="loading-animation">Andrew is thinking...</div>', unsafe_allow_html=True)
-            time.sleep(1)  # Simulate a slight delay for effect
-            response = get_gemini_response(user_input)
-
-        # Add bot response to the chat history
-        response_text = ""
-        for chunk in response:
-            response_text += chunk.text
-            st.session_state['chat_history'].append(("Bot", chunk.text))
+    # Add bot response to the chat history
+    response_text = ""
+    for chunk in response:
+        response_text += chunk.text
+        st.session_state['chat_history'].append(("Bot", chunk.text))
 
 # Auto-scroll to the latest message
 st.markdown('<script>document.querySelector(".chat-container").scrollTop = document.querySelector(".chat-container").scrollHeight;</script>', unsafe_allow_html=True)
