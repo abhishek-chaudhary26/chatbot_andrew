@@ -18,7 +18,7 @@ def get_gemini_response(question):
 
 # Initialize Streamlit app configuration
 st.set_page_config(
-    page_title="Gemini LLM Application",
+    page_title="Meet Andrew",
     page_icon="🤖",
     layout="wide",
     initial_sidebar_state="expanded"
