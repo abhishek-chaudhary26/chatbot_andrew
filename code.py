@@ -69,12 +69,12 @@ st.markdown("""
             word-wrap: break-word;
         }
         .user-message {
-            background-color: #333333;
+            background-color: #007BFF;
             color: #FFFFFF;
             align-self: flex-end;
         }
         .bot-message {
-            background-color: #333333;
+            background-color: #007BFF;
             color: #FFFFFF;
             align-self: flex-start;
         }
