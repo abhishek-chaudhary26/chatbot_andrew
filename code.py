@@ -135,6 +135,19 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+st.markdown("""
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            let theme = localStorage.getItem('theme');
+            if (theme === 'light') {
+                document.body.classList.add('light-theme');
+            } else {
+                document.body.classList.remove('light-theme');
+            }
+        });
+    </script>
+""", unsafe_allow_html=True)
+
 # Sidebar content for app introduction
 with st.sidebar:
     st.title("About Andrew The Bot")
