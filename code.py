@@ -77,7 +77,7 @@ st.markdown("""
             word-wrap: break-word;
         }
         .user-message {
-            background-color: #4A90E2;
+            background-color: #333333;
             color: #FFFFFF;
             align-self: flex-end;
         }
