@@ -113,7 +113,7 @@ st.markdown("""
         }
         /* Animation for loading */
         .loading-animation {
-            font-size: 14px;
+            font-size: 16px;
             color: #007BFF;
             text-align: center;
             margin-top: 20px;
@@ -140,9 +140,10 @@ with st.sidebar:
         - Funny jokes to brighten your day
         - Coding problem solving
 
-        Developed by **ABHISHEK**.
+    **Powered by Gemini Pro API**.
+        **Designed and Developed by Abhishek**.
     """)
-    st.info("Developed by ABHISHEK.")
+    st.info("Implementation by Abhishek.")
 
 # Show a welcome modal on app load
 if 'first_visit' not in st.session_state:
