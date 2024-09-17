@@ -2,6 +2,9 @@ from dotenv import load_dotenv
 import streamlit as st
 import os
 import google.generativeai as genai
+from PIL import Image
+import requests
+from io import BytesIO
 
 # Load environment variables
 load_dotenv()
@@ -15,6 +18,16 @@ chat = model.start_chat(history=[])
 def get_gemini_response(question):
     response = chat.send_message(question, stream=True)
     return response
+    
+# Function to generate an image from a description
+def generate_image(description):
+    # Placeholder function - replace with actual image generation API call
+    # Example: call an API to generate an image based on the description
+    # This is just a mock URL for demonstration purposes
+    mock_image_url = "https://via.placeholder.com/800x400.png?text=" + description.replace(" ", "+")
+    response = requests.get(mock_image_url)
+    img = Image.open(BytesIO(response.content))
+    return img
 
 # Initialize Streamlit app configuration
 st.set_page_config(
@@ -63,6 +76,7 @@ st.markdown('<p class="header">Andrew 🤖</p>', unsafe_allow_html=True)
 with st.sidebar:
     st.header("Instructions")
     st.write("Ask any question from Andrew and get instant responses.")
+    st.write("You can also generate images based on descriptions and view links below.")
     st.write("The chat history will be displayed below the conversation.")
 
 # Initialize session state for chat history if it doesn't exist
@@ -86,6 +100,19 @@ if submit_button and user_input:
     for chunk in response:
         st.write(chunk.text)
         st.session_state['chat_history'].append(("Bot", chunk.text))
+
+if "image" in user_input.lower():
+        image_description = user_input.lower().replace("image", "").strip()
+        st.subheader("Generated Image")
+        image = generate_image(image_description)
+        st.image(image, caption=f"Image for: {image_description}", use_column_width=True)
+
+    # Example of handling links (replace with actual logic if applicable)
+    # Display links from response if any
+    if "http" in user_input:
+        st.subheader("Useful Links")
+        st.write(f"Check out this link: [Click here]({user_input})")
+
 
 # Display chat history
 st.subheader("Chat History")
