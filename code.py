@@ -45,12 +45,20 @@ st.set_page_config(
 
 # Custom CSS for dark theme and ChatGPT-like layout
 st.markdown("""
-    <style>
+     <style>
         /* Global settings */
         body {
-            background-color: #1E1E1E;
-            color: #FFFFFF;
+            background-color: #1E1E1E; /* Dark theme background */
+            color: #FFFFFF; /* Text color for dark theme */
             font-family: Arial, sans-serif;
+        }
+        /* Light theme settings */
+        .light-theme body {
+            background-color: #FFFFFF; /* Light theme background */
+            color: #000000; /* Text color for light theme */
+        }
+        .light-theme .header {
+            color: #000000; /* Text color for light theme */
         }
         /* Header */
         .header {
