@@ -55,18 +55,10 @@ st.markdown("""
         /* Header */
         .header {
             font-size: 32px;
-            color: #FFFFFF; /* Text color for dark theme */
+            color: #007BFF
             text-align: center;
             margin: 20px;
             font-weight: bold;
-        }
-        /* Light theme settings */
-        .light-theme body {
-            background-color: #FFFFFF;
-            color: #000000;
-        }
-        .light-theme .header {
-            color: #000000; /* Text color for light theme */
         }
         /* Message bubbles */
         .message {
@@ -133,19 +125,6 @@ st.markdown("""
             100% { opacity: 1; }
         }
     </style>
-""", unsafe_allow_html=True)
-
-st.markdown("""
-    <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            let theme = localStorage.getItem('theme');
-            if (theme === 'light') {
-                document.body.classList.add('light-theme');
-            } else {
-                document.body.classList.remove('light-theme');
-            }
-        });
-    </script>
 """, unsafe_allow_html=True)
 
 # Sidebar content for app introduction
