@@ -27,6 +27,13 @@ st.set_page_config(
 # Custom CSS for dark theme and ChatGPT-like layout, styling, and animations
 st.markdown("""
     <style>
+        /* Remove extra spacing */
+        .css-18e3th9 {
+            padding-top: 0px;
+            padding-bottom: 0px;
+            padding-left: 0px;
+            padding-right: 0px;
+        }
         /* Dark theme settings */
         body {
             background-color: #1E1E1E;
@@ -36,8 +43,8 @@ st.markdown("""
             color: #FFFFFF;
             text-align: center;
             font-weight: bold;
-            margin-top: 20px;
-            margin-bottom: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
         .chat-container {
             display: flex;
@@ -151,7 +158,11 @@ for role, text in st.session_state['chat_history']:
     st.markdown(f'<div class="message {message_class}">{text}</div>', unsafe_allow_html=True)
 st.markdown('</div>', unsafe_allow_html=True)
 
-# Input and submit button (Now outside a form to avoid delays)
+# Reset the input after receiving the response
+if 'input' not in st.session_state:
+    st.session_state['input'] = ""
+
+# Input and submit button (Now using session state correctly)
 user_input = st.text_input("Type your message...", key="input", placeholder="Type here...", label_visibility='collapsed')
 
 if user_input:
@@ -163,14 +174,15 @@ if user_input:
         st.markdown('<div class="loading-animation">Andrew is thinking...</div>', unsafe_allow_html=True)
         time.sleep(1)  # Simulate a slight delay for effect
         response = get_gemini_response(user_input)
-    
+
+    # Add bot response to the chat history
     response_text = ""
     for chunk in response:
         response_text += chunk.text
         st.session_state['chat_history'].append(("Bot", chunk.text))
 
-    # Clear input after sending
-    st.session_state.input = ""
+    # Clear input field after sending
+    st.session_state['input'] = ""
 
 # Auto-scroll to the latest message
 st.markdown('<script>document.querySelector(".chat-container").scrollTop = document.querySelector(".chat-container").scrollHeight;</script>', unsafe_allow_html=True)
