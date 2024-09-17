@@ -20,7 +20,7 @@ def get_gemini_response(question):
 st.set_page_config(
     page_title="Gemini Chat",
     page_icon="🤖",
-    layout="centered",  # Centered layout for better appearance
+    layout="centered",
 )
 
 # Custom CSS for ChatGPT-like layout and styling
@@ -128,24 +128,24 @@ for role, text in st.session_state['chat_history']:
     st.markdown(f'<div class="message {message_class}">{text}</div>', unsafe_allow_html=True)
 st.markdown('</div>', unsafe_allow_html=True)
 
-# Input and submit button (Input is placed at the bottom)
-with st.form(key='chat_form', clear_on_submit=True):
-    user_input = st.text_input("Type your message...", key="input", placeholder="Type here...")
-    submit_button = st.form_submit_button("Send", use_container_width=True, help="Press Enter to submit")
+# Input and submit button (Now outside a form to avoid delays)
+user_input = st.text_input("Type your message...", key="input", placeholder="Type here...")
 
-# Handle user input and display response
-if submit_button and user_input:
+if user_input:
     # Add user input to chat history
     st.session_state['chat_history'].append(("You", user_input))
-    
+
+    # Fetch bot response
     with st.spinner('Getting response...'):
         response = get_gemini_response(user_input)
     
-    # Display bot's response and update chat history
     response_text = ""
     for chunk in response:
         response_text += chunk.text
         st.session_state['chat_history'].append(("Bot", chunk.text))
-    
-    # Auto-scroll to the latest message
-    st.markdown('<script>document.querySelector(".chat-container").scrollTop = document.querySelector(".chat-container").scrollHeight;</script>', unsafe_allow_html=True)
+
+    # Clear input after sending
+    st.session_state.input = ""
+
+# Auto-scroll to the latest message
+st.markdown('<script>document.querySelector(".chat-container").scrollTop = document.querySelector(".chat-container").scrollHeight;</script>', unsafe_allow_html=True)
