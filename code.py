@@ -77,6 +77,17 @@ with col1:
 with col2:
     submit_button = st.button("Ask", key="submit")
 
+st.markdown("""
+    <script>
+        document.querySelector('input[name="input"]').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent default form submission
+                document.querySelector('button[data-baseweb="button"]').click(); // Trigger button click
+            }
+        });
+    </script>
+""", unsafe_allow_html=True)
+
 # Handle user input and display response
 if submit_button and user_input:
     with st.spinner('Getting response...'):
