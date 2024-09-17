@@ -107,9 +107,9 @@ if "image" in user_input.lower():
         image = generate_image(image_description)
         st.image(image, caption=f"Image for: {image_description}", use_column_width=True)
 
-    # Example of handling links (replace with actual logic if applicable)
-    # Display links from response if any
-    if "http" in user_input:
+# Example of handling links (replace with actual logic if applicable)
+# Display links from response if any
+if "http" in user_input:
         st.subheader("Useful Links")
         st.write(f"Check out this link: [Click here]({user_input})")
 
