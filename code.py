@@ -2,7 +2,6 @@ from dotenv import load_dotenv
 import streamlit as st
 import os
 import google.generativeai as genai
-import random
 import time
 
 # Load environment variables
@@ -133,7 +132,7 @@ if st.session_state['first_visit']:
     st.session_state['first_visit'] = False
     st.markdown("""
         <script>
-        alert('Welcome to Andrew The Bot! Ask me anything and enjoy some jokes along the way.');
+        alert('Welcome to Andrew The Bot! Ask me anything ');
         </script>
     """, unsafe_allow_html=True)
 
