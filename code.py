@@ -43,36 +43,31 @@ st.set_page_config(
     layout="centered",
 )
 
-# Custom CSS for dark theme and ChatGPT-like layout
+# Custom CSS for theme
 st.markdown("""
-     <style>
-        /* Global settings */
+    <style>
+        /* Default dark theme */
         body {
-            background-color: #1E1E1E; /* Dark theme background */
-            color: #FFFFFF; /* Text color for dark theme */
+            background-color: #1E1E1E;
+            color: #FFFFFF;
             font-family: Arial, sans-serif;
         }
-        /* Light theme settings */
-        .light-theme body {
-            background-color: #FFFFFF; /* Light theme background */
-            color: #000000; /* Text color for light theme */
-        }
-        .light-theme .header {
-            color: #000000; /* Text color for light theme */
-        }
-       /* Header */
+        /* Header */
         .header {
             font-size: 32px;
-            color: #FFFFFF; /* Default text color */
+            color: #FFFFFF; /* Text color for dark theme */
             text-align: center;
             margin: 20px;
             font-weight: bold;
         }
-        .light-theme .header {
-            color: #000000; /* Header color for light theme */
+        /* Light theme settings */
+        .light-theme body {
+            background-color: #FFFFFF;
+            color: #000000;
         }
-        /* Rest of your CSS styles */
-        /* ... */
+        .light-theme .header {
+            color: #000000; /* Text color for light theme */
+        }
         /* Message bubbles */
         .message {
             padding: 10px;
