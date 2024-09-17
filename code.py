@@ -20,10 +20,10 @@ def get_gemini_response(question):
 st.set_page_config(
     page_title="Gemini Chat",
     page_icon="🤖",
-    layout="centered",  # Ensure the layout is centered for a cleaner look
+    layout="centered",  # Centered layout for better appearance
 )
 
-# Custom CSS for a ChatGPT-like look with title at the top
+# Custom CSS for ChatGPT-like layout and styling
 st.markdown("""
     <style>
         .header {
@@ -128,27 +128,24 @@ for role, text in st.session_state['chat_history']:
     st.markdown(f'<div class="message {message_class}">{text}</div>', unsafe_allow_html=True)
 st.markdown('</div>', unsafe_allow_html=True)
 
-# Input and submit button
+# Input and submit button (Input is placed at the bottom)
 with st.form(key='chat_form', clear_on_submit=True):
     user_input = st.text_input("Type your message...", key="input", placeholder="Type here...")
     submit_button = st.form_submit_button("Send", use_container_width=True, help="Press Enter to submit")
 
 # Handle user input and display response
 if submit_button and user_input:
+    # Add user input to chat history
+    st.session_state['chat_history'].append(("You", user_input))
+    
     with st.spinner('Getting response...'):
         response = get_gemini_response(user_input)
     
-    st.session_state['chat_history'].append(("You", user_input))
-    
-    # Display response
-    st.subheader("Response")
+    # Display bot's response and update chat history
     response_text = ""
     for chunk in response:
         response_text += chunk.text
         st.session_state['chat_history'].append(("Bot", chunk.text))
-    
-    # Update chat history with bot response
-    st.markdown('<div class="message bot-message">{}</div>'.format(response_text), unsafe_allow_html=True)
     
     # Auto-scroll to the latest message
     st.markdown('<script>document.querySelector(".chat-container").scrollTop = document.querySelector(".chat-container").scrollHeight;</script>', unsafe_allow_html=True)
