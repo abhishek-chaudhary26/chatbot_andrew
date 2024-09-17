@@ -55,6 +55,21 @@ st.markdown("""
             margin: 20px;
             font-weight: bold;
         }
+        /* Chat container */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 80vh;
+            max-height: 80vh;
+            overflow-y: auto;
+            background-color: #2D2D2D;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 0 auto;
+            width: 90%;
+            max-width: 800px;
+            margin-bottom: 60px; /* Leave space for input field */
+        }
         /* Message bubbles */
         .message {
             padding: 10px;
@@ -154,8 +169,7 @@ if st.session_state['first_visit']:
 st.markdown('<p class="header">Andrew The Bot</p>', unsafe_allow_html=True)
 
 # Display chat messages
-if 'messages' not in st.session_state:
-    st.session_state.messages = []
+st.markdown('<div class="chat-container">', unsafe_allow_html=True)
 
 # Input section
 with st.form(key='input_form', clear_on_submit=True):
@@ -164,40 +178,25 @@ with st.form(key='input_form', clear_on_submit=True):
 
 if submit_button and user_input:
     # Add user input to chat
-    st.session_state.messages.append(('user', user_input))
+    st.markdown(f'<div class="message user-message">{user_input}</div>', unsafe_allow_html=True)
 
     # Display thinking animation
     st.markdown('<div class="loading-animation">Andrew is thinking...</div>', unsafe_allow_html=True)
-    st.experimental_rerun()  # Refresh to show thinking animation
 
     # Simulate delay
     time.sleep(2)  # 2-second delay before showing the response
 
     # Get response
     response = get_gemini_response(user_input)
+
+    # Add bot response to chat
     response_text = ""
     for chunk in response:
         response_text += chunk.text
 
-    # Add bot response and random joke
+    # Add response and random joke
     random_joke = get_random_joke()
-    st.session_state.messages.append(('bot', f"{response_text}<br><br><i>{random_joke}</i>"))
+    st.markdown(f'<div class="message bot-message">{response_text} <br><br> <i>{random_joke}</i></div>', unsafe_allow_html=True)
 
-    st.experimental_rerun()  # Refresh to show the response
-
-# Display all messages
-for role, text in st.session_state.messages:
-    if role == 'user':
-        st.markdown(f'<div class="message user-message">{text}</div>', unsafe_allow_html=True)
-    else:
-        st.markdown(f'<div class="message bot-message">{text}</div>', unsafe_allow_html=True)
-
-# Input section (fixed position at the bottom)
-st.markdown("""
-    <div class="input-container">
-        <form action="" method="post" id="input_form">
-            <textarea name="input" class="input-box" placeholder="Type here..."></textarea>
-            <button type="submit" class="send-button">Send</button>
-        </form>
-    </div>
-""", unsafe_allow_html=True)
+# Auto-scroll to the latest message
+st.markdown('<script>document.querySelector(".chat-container").scrollTop = document.querySelector(".chat-container").scrollHeight;</script>', unsafe_allow_html=True)
