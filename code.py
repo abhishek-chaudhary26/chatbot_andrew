@@ -60,14 +60,19 @@ st.markdown("""
         .light-theme .header {
             color: #000000; /* Text color for light theme */
         }
-        /* Header */
+       /* Header */
         .header {
             font-size: 32px;
-            color: #FFFFFF;
+            color: #FFFFFF; /* Default text color */
             text-align: center;
             margin: 20px;
             font-weight: bold;
         }
+        .light-theme .header {
+            color: #000000; /* Header color for light theme */
+        }
+        /* Rest of your CSS styles */
+        /* ... */
         /* Message bubbles */
         .message {
             padding: 10px;
