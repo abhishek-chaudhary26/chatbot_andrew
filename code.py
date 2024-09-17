@@ -54,22 +54,7 @@ st.markdown("""
             text-align: center;
             margin: 20px;
             font-weight: bold;
-        }
-        /* Chat container */
-        .chat-container {
-            display: flex;
-            flex-direction: column;
-            height: 80vh;
-            max-height: 80vh;
-            overflow-y: auto;
-            background-color: #2D2D2D;
-            border-radius: 10px;
-            padding: 10px;
-            margin: 0 auto;
-            width: 90%;
-            max-width: 800px;
-            margin-bottom: 60px; /* Leave space for input field */
-        }
+        
         /* Message bubbles */
         .message {
             padding: 10px;
