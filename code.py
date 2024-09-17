@@ -57,7 +57,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Header for the app
-st.markdown('<p class="header">Andrew AI chat-bot</p>', unsafe_allow_html=True)
+st.markdown('<p class="header">Andrew</p>', unsafe_allow_html=True)
 
 # Sidebar for additional controls
 with st.sidebar:
