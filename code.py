@@ -70,23 +70,9 @@ if 'chat_history' not in st.session_state:
     st.session_state['chat_history'] = []
 
 # Input and submit button
-col1, col2 = st.columns([3, 1])
-with col1:
+with st.form(key='chat_form'):
     user_input = st.text_input("Ask a question:", key="input", placeholder="Type your question here...")
-
-with col2:
-    submit_button = st.button("Ask", key="submit")
-
-st.markdown("""
-    <script>
-        document.querySelector('input[name="input"]').addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault(); // Prevent default form submission
-                document.querySelector('button[data-baseweb="button"]').click(); // Trigger button click
-            }
-        });
-    </script>
-""", unsafe_allow_html=True)
+    submit_button = st.form_submit_button("Ask")
 
 # Handle user input and display response
 if submit_button and user_input:
