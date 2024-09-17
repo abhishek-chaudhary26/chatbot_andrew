@@ -16,6 +16,24 @@ chat = model.start_chat(history=[])
 def get_gemini_response(question):
     response = chat.send_message(question, stream=True)
     return response
+    
+# List of funny thinking messages
+thinking_messages = [
+    "Andrew is brewing up some wisdom...",
+    "Andrew is putting on his thinking cap...",
+    "Andrew is consulting his magic 8-ball...",
+    "Andrew is busy plotting world domination (or maybe just your answer)...",
+    "Andrew is sharpening his pencils for a great response...",
+    "Andrew is decoding your question with the help of his crystal ball...",
+    "Andrew is Googling... just kidding, he’s all AI!",
+    "Andrew is summoning his inner genius...",
+    "Andrew is deep in thought (or maybe just daydreaming)...",
+    "Andrew is working hard to not give you a generic response..."
+    
+]
+
+def get_random_thinking_message():
+    return random.choice(thinking_messages)
 
 # Initialize Streamlit app configuration
 st.set_page_config(
@@ -152,7 +170,9 @@ if submit_button and user_input:
     st.markdown(f'<div class="message user-message">{user_input}</div>', unsafe_allow_html=True)
 
     # Display thinking animation
-    st.markdown('<div class="loading-animation">Andrew is thinking...</div>', unsafe_allow_html=True)
+    thinking_message = get_random_thinking_message()
+    st.markdown(f'<div class="loading-animation">{thinking_message}</div>', unsafe_allow_html=True)
+    st.experimental_rerun()
 
     # Simulate delay
     time.sleep(2)  # 2-second delay before showing the response
