@@ -85,9 +85,9 @@ submit = st.button("Get Response")
 if submit or st.session_state.get("submit_on_enter", False):
     st.session_state['input_text'] = ""  # Reset input after submission
     if input_text:
-    with st.spinner("Andrew is thinking..."):
-        time.sleep(2)  # Simulating a delay of 2 seconds
-        response = get_gemini_response(input_text)
+        with st.spinner("Andrew is thinking..."):
+            time.sleep(2)  # Simulating a delay of 2 seconds
+            response = get_gemini_response(input_text)
 
     st.session_state['chat_history'].append(("You", input_text))
 
