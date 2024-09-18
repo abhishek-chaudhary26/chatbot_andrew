@@ -20,7 +20,7 @@ def get_gemini_response(question):
         return []
 
 # Initialize the Streamlit app
-st.set_page_config(page_title="Andrew The Bot")
+st.set_page_config(page_title="Meet Andrew")
 
 # Side panel with chatbot name and description
 with st.sidebar:
@@ -64,7 +64,7 @@ if 'chat_history' not in st.session_state:
 st.title("Chat with Andrew")
 
 input_text = st.text_input("Curious about something? Ask away!", key="input")
-submit = st.button("Send")
+submit = st.button("Get Response")
 
 if submit and input_text:
     response = get_gemini_response(input_text)
