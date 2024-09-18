@@ -25,19 +25,21 @@ st.set_page_config(page_title="Meet Andrew")
 # Side panel with chatbot name and description
 with st.sidebar:
     st.title("Andrew The Bot")
-    st.write("# Meet Andrew: Your Friendly Chatbot
+    st.markdown("""
+    # Meet Andrew: Your Friendly Chatbot
 
-**Andrew** is your intelligent chatbot powered by the **Gemini API**! Designed to engage in meaningful conversations, Andrew provides insightful answers and assists you with a wide range of topics.
+    **Andrew** is your intelligent chatbot powered by the **Gemini API**! Designed to engage in meaningful conversations, Andrew provides insightful answers and assists you with a wide range of topics.
 
-## Features
+    ## Features
 
-- **Interactive Conversations**: Andrew engages in dynamic dialogues, making each interaction feel personal and tailored to you.
-- **Knowledgeable Responses**: Leverage the power of the Gemini API for accurate information across various subjects, from science and history to entertainment and lifestyle.
-- **24/7 Availability**: Andrew is always online, ready to assist you anytime, anywhere.
-- **User-Friendly Interface**: Enjoy a seamless chatting experience with an intuitive interface that makes it easy to ask questions and get answers.
+    - **Interactive Conversations**: Andrew engages in dynamic dialogues, making each interaction feel personal and tailored to you.
+    - **Knowledgeable Responses**: Leverage the power of the Gemini API for accurate information across various subjects, from science and history to entertainment and lifestyle.
+    - **24/7 Availability**: Andrew is always online, ready to assist you anytime, anywhere.
+    - **User-Friendly Interface**: Enjoy a seamless chatting experience with an intuitive interface that makes it easy to ask questions and get answers.
 
-Discover the joy of chatting with Andrew, your go-to chatbot for information, advice, and friendly conversation!"
-)
+    Discover the joy of chatting with Andrew, your go-to chatbot for information, advice, and friendly conversation!
+    """)
+
 
 # Custom CSS styling
 st.markdown(
