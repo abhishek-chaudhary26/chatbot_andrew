@@ -83,8 +83,7 @@ input_text = st.text_area("Curious about something? Ask away!", key="input", hei
 
 submit = st.button("Get Response")
 
-if submit or st.session_state.get("submit_on_enter", False):
-    st.session_state['input_text'] = ""  # Reset input after submission
+if submit:
     if input_text:
         with st.spinner("Pixella is thinking..."):
             time.sleep(2)  # Simulating a delay of 2 seconds
