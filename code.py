@@ -11,13 +11,12 @@ api_key = os.getenv("GOOGLE_API_KEY")
 genai.configure(api_key=api_key)
 
 # Function to get responses from the Gemini Pro model
+model=genai.GenerativeModel("gemini-pro") 
+chat = model.start_chat(history=[])
 def get_gemini_response(question):
-    try:
-        response = genai.generate(prompt=question)
-        response_text = response.generations[0].text if response and response.generations else "Sorry, I didn't understand that."
-    except Exception as e:
-        response_text = f"An error occurred: {str(e)}"
-    return response_text
+    
+    response=chat.send_message(question,stream=True)
+    return response
 
 # List of funny thinking messages
 thinking_messages = [
