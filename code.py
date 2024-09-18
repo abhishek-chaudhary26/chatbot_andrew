@@ -14,28 +14,10 @@ genai.configure(api_key=api_key)
 model = genai.GenerativeModel("gemini-pro")
 chat = model.start_chat(history=[])
 
-# List of phrases to check if the user is asking about the bot's name or identity
-identity_queries = [
-    "your name", "who are you", "what's your name", "are you gemini", "who is gemini", "what is gemini"
-]
-
-def get_gemini_response(question):
-    # Check if the user is asking about the bot's identity
-    lower_question = question.lower()
-    if any(phrase in lower_question for phrase in identity_queries):
-        # If user asks about Gemini, clarify the distinction
-        if "gemini" in lower_question:
-            return [f"I am {BOT_NAME}, an AI built using the Gemini model. How can I assist you today?"]
-        else:
-            return [f"My name is {BOT_NAME}! How can I assist you today?"]
-    
-    # Otherwise, get the normal response from the Gemini model
-    response = chat.send_message(question, stream=True)
-    full_response = ""
+response = get_gemini_response(user_input)
+    response_text = ""
     for chunk in response:
-        full_response += chunk.text
-
-    return [full_response]
+        response_text += chunk.text
     
 # List of funny thinking messages
 thinking_messages = [
