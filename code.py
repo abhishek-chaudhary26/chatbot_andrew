@@ -27,18 +27,18 @@ st.set_page_config(page_title="Meet Andrew")
 with st.sidebar:
     st.title("Andrew The Bot")
     st.markdown("""
-    # Meet Andrew: Your Friendly Chatbot
+    # Meet Pixella: Your Friendly Chatbot
 
-    **Andrew** is your intelligent chatbot powered by the **Gemini API**! Designed to engage in meaningful conversations, Andrew provides insightful answers and assists you with a wide range of topics.
+    **Pixella** is your intelligent chatbot powered by the **Gemini API**! Designed to engage in meaningful conversations, Andrew provides insightful answers and assists you with a wide range of topics.
 
     ## Features
 
     - **Interactive Conversations**: Andrew engages in dynamic dialogues, making each interaction feel personal and tailored to you.
     - **Knowledgeable Responses**: Leverage the power of the Gemini API for accurate information across various subjects, from science and history to entertainment and lifestyle.
-    - **24/7 Availability**: Andrew is always online, ready to assist you anytime, anywhere.
+    - **24/7 Availability**: Pixella is always online, ready to assist you anytime, anywhere.
     - **User-Friendly Interface**: Enjoy a seamless chatting experience with an intuitive interface that makes it easy to ask questions and get answers.
 
-    Discover the joy of chatting with Andrew, your go-to chatbot for information, advice, and friendly conversation!
+    Discover the joy of chatting with Pixella, your go-to chatbot for information, advice, and friendly conversation!
     """)
 
 # Custom CSS styling
@@ -75,7 +75,7 @@ st.markdown(
 if 'chat_history' not in st.session_state:
     st.session_state['chat_history'] = []
 
-st.title("Chat with Andrew")
+st.title("Chat with Pixella")
 
 # Use only one input area
 input_text = st.text_area("Curious about something? Ask away!", key="input", height=100)
@@ -85,16 +85,16 @@ submit = st.button("Get Response")
 if submit or st.session_state.get("submit_on_enter", False):
     st.session_state['input_text'] = ""  # Reset input after submission
     if input_text:
-        with st.spinner("Andrew is thinking..."):
+        with st.spinner("Pixella is thinking..."):
             time.sleep(2)  # Simulating a delay of 2 seconds
             response = get_gemini_response(input_text)
 
     st.session_state['chat_history'].append(("You", input_text))
 
-    st.subheader("Andrew's Response")
+    st.subheader("Pixella's Response")
     for chunk in response:
         st.write(chunk.text)
-        st.session_state['chat_history'].append(("Andrew", chunk.text))
+        st.session_state['chat_history'].append(("Pixella", chunk.text))
 
 st.subheader("Chat History")
 for role, text in st.session_state['chat_history']:
