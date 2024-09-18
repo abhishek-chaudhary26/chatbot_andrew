@@ -12,11 +12,8 @@ genai.configure(api_key=api_key)
 
 # Function to get responses from the Gemini Pro model
 def get_gemini_response(question):
-    chat = genai.start_chat()
-    response = chat.send_message(question, stream=True)
-    response_text = ""
-    for chunk in response:
-        response_text += chunk.text
+    response = genai.generate_text(prompt=question)
+    response_text = response.generations[0].text if response and response.generations else "Sorry, I didn't understand that."
     return response_text
 
 # List of funny thinking messages
