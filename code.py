@@ -10,15 +10,15 @@ load_dotenv()
 api_key = os.getenv("GOOGLE_API_KEY")
 genai.configure(api_key=api_key)
 
-# Function to load Gemini Pro model and get responses
-model = genai.GenerativeModel("gemini-pro")
-chat = model.start_chat(history=[])
+# Function to get responses from the Gemini Pro model
+def get_gemini_response(question):
+    chat = genai.start_chat()
+    response = chat.send_message(question, stream=True)
+    response_text = ""
+    for chunk in response:
+        response_text += chunk.text
+    return response_text
 
-response = get_gemini_response(user_input)
-response_text = ""
-for chunk in response:
-    response_text += chunk.text
-    
 # List of funny thinking messages
 thinking_messages = [
     "Andrew is brewing up some wisdom...",
@@ -31,7 +31,6 @@ thinking_messages = [
     "Andrew is summoning his inner genius...",
     "Andrew is deep in thought (or maybe just daydreaming)...",
     "Andrew is working hard to not give you a generic response..."
-    
 ]
 
 def get_random_thinking_message():
@@ -47,21 +46,18 @@ st.set_page_config(
 # Custom CSS for theme
 st.markdown("""
     <style>
-        /* Default dark theme */
         body {
             background-color: #1E1E1E;
             color: #FFFFFF;
             font-family: Arial, sans-serif;
         }
-        /* Header */
         .header {
             font-size: 32px;
-            color: #007BFF
+            color: #007BFF;
             text-align: center;
             margin: 20px;
             font-weight: bold;
         }
-        /* Message bubbles */
         .message {
             padding: 10px;
             margin: 5px;
@@ -75,11 +71,10 @@ st.markdown("""
             align-self: flex-end;
         }
         .bot-message {
-            background-color: #007BFF;
+            background-color: #4A90E2;
             color: #FFFFFF;
             align-self: flex-start;
         }
-        /* Input section */
         .input-container {
             display: flex;
             position: fixed;
@@ -109,10 +104,6 @@ st.markdown("""
             cursor: pointer;
             margin-left: 10px;
         }
-        .send-button:hover {
-            background-color: #357ABD;
-        }
-        /* Animation for loading */
         .loading-animation {
             font-size: 16px;
             color: #007BFF;
@@ -128,23 +119,13 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Sidebar content for app introduction
+# Sidebar content
 with st.sidebar:
     st.title("About Andrew")
     st.markdown("""
         **Andrew** is an AI-powered chatbot built using the Gemini Pro model. 
         It can answer various questions and tell you some funny jokes to lighten the mood.
-
-        ### Features:
-        - AI text generation with Gemini LLM
-        - Real-time response
-        - Funny jokes to brighten your day
-        - Coding problem solving
-
-    **Powered by Gemini Pro API**.
-        **Designed and Developed by Abhishek**.
     """)
-    st.info("Implementation by Abhishek.")
 
 # Show a welcome modal on app load
 if 'first_visit' not in st.session_state:
@@ -154,20 +135,17 @@ if st.session_state['first_visit']:
     st.session_state['first_visit'] = False
     st.markdown("""
         <script>
-        alert('Welcome to Andrew! Ask me anything ');
+        alert('Welcome to Andrew! Ask me anything.');
         </script>
     """, unsafe_allow_html=True)
 
 # Header for the app
 st.markdown('<p class="header">Andrew</p>', unsafe_allow_html=True)
 
-# Display chat messages
-st.markdown('<div class="chat-container">', unsafe_allow_html=True)
-
 # Input section
 with st.form(key='input_form', clear_on_submit=True):
-    user_input = st.text_area("What's on your mind?", "", placeholder="Type here...", key="input_box", height=50)
-    submit_button = st.form_submit_button("")
+    user_input = st.text_area("What's on your mind?", "", placeholder="Type your message here...", key="input_box", height=50)
+    submit_button = st.form_submit_button("Send")
 
 if submit_button and user_input:
     # Add user input to chat
@@ -178,20 +156,13 @@ if submit_button and user_input:
     st.markdown(f'<div class="loading-animation">{thinking_message}</div>', unsafe_allow_html=True)
 
     # Simulate delay
-    time.sleep(2)  # 2-second delay before showing the response
+    time.sleep(2)
 
-    # Notify the user that the response is below
-    st.markdown('<p class="loading-animation">The response is below, get ready!</p>', unsafe_allow_html=True)
-
-    # Get response
-    response = get_gemini_response(user_input)
+    # Get response from the bot
+    response_text = get_gemini_response(user_input)
 
     # Add bot response to chat
-    response_text = ""
-    for chunk in response:
-        response_text += chunk.text
-
-    st.markdown(f'<div class="message bot-message">{response_text} </div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="message bot-message">{response_text}</div>', unsafe_allow_html=True)
 
 # Auto-scroll to the latest message
 st.markdown('<script>document.querySelector(".chat-container").scrollTop = document.querySelector(".chat-container").scrollHeight;</script>', unsafe_allow_html=True)
