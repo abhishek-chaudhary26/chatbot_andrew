@@ -26,7 +26,7 @@ st.set_page_config(page_title="Meet Pixella")
 # Side panel with chatbot name and description
 with st.sidebar:
     st.image("Capture.PNG", use_column_width=True)
-    st.title("Pixella The Bot")
+    st.title("<h1 style='font-size: 2em;'>Pixella</h1>", unsafe_allow_html=True))
     st.markdown("""
     # Meet Pixella: Your Friendly Chatbot
 
