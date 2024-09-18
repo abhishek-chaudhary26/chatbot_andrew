@@ -12,8 +12,11 @@ genai.configure(api_key=api_key)
 
 # Function to get responses from the Gemini Pro model
 def get_gemini_response(question):
-    response = genai.generate(prompt=question)
-    response_text = response.generations[0].text if response and response.generations else "Sorry, I didn't understand that."
+    try:
+        response = genai.generate(prompt=question)
+        response_text = response.generations[0].text if response and response.generations else "Sorry, I didn't understand that."
+    except Exception as e:
+        response_text = f"An error occurred: {str(e)}"
     return response_text
 
 # List of funny thinking messages
@@ -42,85 +45,85 @@ st.set_page_config(
 
 # Custom CSS for theme
 st.markdown("""
-    <style>
-        body {
-            background-color: #1E1E1E;
-            color: #FFFFFF;
-            font-family: Arial, sans-serif;
-        }
-        .header {
-            font-size: 32px;
-            color: #007BFF;
-            text-align: center;
-            margin: 20px;
-            font-weight: bold;
-        }
-        .message {
-            padding: 10px;
-            margin: 5px;
-            border-radius: 10px;
-            max-width: 75%;
-            word-wrap: break-word;
-        }
-        .user-message {
-            background-color: #007BFF;
-            color: #FFFFFF;
-            align-self: flex-end;
-        }
-        .bot-message {
-            background-color: #4A90E2;
-            color: #FFFFFF;
-            align-self: flex-start;
-        }
-        .input-container {
-            display: flex;
-            position: fixed;
-            bottom: 0;
-            width: 90%;
-            max-width: 800px;
-            background-color: #2D2D2D;
-            padding: 10px;
-            border-radius: 10px;
-            margin: 0 auto;
-        }
-        .input-box {
-            flex: 1;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #444444;
-            background-color: #1E1E1E;
-            color: #FFFFFF;
-        }
-        .send-button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            background-color: #4A90E2;
-            color: #FFFFFF;
-            font-weight: bold;
-            cursor: pointer;
-            margin-left: 10px;
-        }
-        .loading-animation {
-            font-size: 16px;
-            color: #007BFF;
-            text-align: center;
-            margin-top: 20px;
-            animation: loading 1s infinite;
-        }
-        @keyframes loading {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-    </style>
+<style>
+    body {
+        background-color: #1E1E1E;
+        color: #FFFFFF;
+        font-family: Arial, sans-serif;
+    }
+    .header {
+        font-size: 32px;
+        color: #007BFF;
+        text-align: center;
+        margin: 20px;
+        font-weight: bold;
+    }
+    .message {
+        padding: 10px;
+        margin: 5px;
+        border-radius: 10px;
+        max-width: 75%;
+        word-wrap: break-word;
+    }
+    .user-message {
+        background-color: #007BFF;
+        color: #FFFFFF;
+        align-self: flex-end;
+    }
+    .bot-message {
+        background-color: #4A90E2;
+        color: #FFFFFF;
+        align-self: flex-start;
+    }
+    .input-container {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        width: 90%;
+        max-width: 800px;
+        background-color: #2D2D2D;
+        padding: 10px;
+        border-radius: 10px;
+        margin: 0 auto;
+    }
+    .input-box {
+        flex: 1;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #444444;
+        background-color: #1E1E1E;
+        color: #FFFFFF;
+    }
+    .send-button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #4A90E2;
+        color: #FFFFFF;
+        font-weight: bold;
+        cursor: pointer;
+        margin-left: 10px;
+    }
+    .loading-animation {
+        font-size: 16px;
+        color: #007BFF;
+        text-align: center;
+        margin-top: 20px;
+        animation: loading 1s infinite;
+    }
+    @keyframes loading {
+        0% { opacity: 1; }
+        50% { opacity: 0.5; }
+        100% { opacity: 1; }
+    }
+</style>
 """, unsafe_allow_html=True)
 
 # Sidebar content
 with st.sidebar:
     st.title("About Andrew")
     st.markdown("""
-        **Andrew** is an AI-powered chatbot built using the Gemini Pro model. 
+        **Andrew** is an AI-powered chatbot built using the Gemini Pro model. 
         It can answer various questions and tell you some funny jokes to lighten the mood.
     """)
 
