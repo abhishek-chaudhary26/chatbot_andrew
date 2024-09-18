@@ -12,7 +12,7 @@ genai.configure(api_key=api_key)
 
 # Function to get responses from the Gemini Pro model
 def get_gemini_response(question):
-    response = genai.generate_text(prompt=question)
+    response = genai.generate(prompt=question)
     response_text = response.generations[0].text if response and response.generations else "Sorry, I didn't understand that."
     return response_text
 
