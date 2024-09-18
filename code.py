@@ -63,10 +63,8 @@ if 'chat_history' not in st.session_state:
 
 st.title("Chat with Andrew")
 
-if st.button("Send") or input_text:
-    # Process the input when Enter is pressed or the button is clicked
-    response = catbot_response(input_text)  # Call your response function here
-    st.text_area("Catbot Response:", response, height=100, disabled=True)
+input_text = st.text_input("Your message:", key="input")
+submit = st.button("Send")
 
 if submit and input_text:
     response = get_gemini_response(input_text)
