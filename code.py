@@ -25,7 +25,7 @@ st.set_page_config(page_title="Meet Andrew")
 
 # Side panel with chatbot name and description
 with st.sidebar:
-    st.title("Andrew The Bot")
+    st.title("Pixella The Bot")
     st.markdown("""
     # Meet Pixella: Your Friendly Chatbot
 
