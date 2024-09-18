@@ -131,7 +131,7 @@ st.markdown("""
 with st.sidebar:
     st.title("About Andrew The Bot")
     st.markdown("""
-        **Andrew The Bot** is an AI-powered chatbot built using the Gemini Pro model. 
+        **Andrew** is an AI-powered chatbot built using the Gemini Pro model. 
         It can answer various questions and tell you some funny jokes to lighten the mood.
 
         ### Features:
@@ -153,12 +153,12 @@ if st.session_state['first_visit']:
     st.session_state['first_visit'] = False
     st.markdown("""
         <script>
-        alert('Welcome to Andrew The Bot! Ask me anything ');
+        alert('Welcome to Andrew! Ask me anything ');
         </script>
     """, unsafe_allow_html=True)
 
 # Header for the app
-st.markdown('<p class="header">Andrew The Bot</p>', unsafe_allow_html=True)
+st.markdown('<p class="header">Andrew</p>', unsafe_allow_html=True)
 
 # Display chat messages
 st.markdown('<div class="chat-container">', unsafe_allow_html=True)
@@ -178,6 +178,9 @@ if submit_button and user_input:
 
     # Simulate delay
     time.sleep(2)  # 2-second delay before showing the response
+
+    # Notify the user that the response is below
+    st.markdown('<p class="loading-animation">The response is below, get ready!</p>', unsafe_allow_html=True)
 
     # Get response
     response = get_gemini_response(user_input)
