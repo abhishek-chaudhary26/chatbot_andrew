@@ -14,9 +14,28 @@ genai.configure(api_key=api_key)
 model = genai.GenerativeModel("gemini-pro")
 chat = model.start_chat(history=[])
 
+# List of phrases to check if the user is asking about the bot's name or identity
+identity_queries = [
+    "your name", "who are you", "what's your name", "are you gemini", "who is gemini", "what is gemini"
+]
+
 def get_gemini_response(question):
+    # Check if the user is asking about the bot's identity
+    lower_question = question.lower()
+    if any(phrase in lower_question for phrase in identity_queries):
+        # If user asks about Gemini, clarify the distinction
+        if "gemini" in lower_question:
+            return [f"I am {BOT_NAME}, an AI built using the Gemini model. How can I assist you today?"]
+        else:
+            return [f"My name is {BOT_NAME}! How can I assist you today?"]
+    
+    # Otherwise, get the normal response from the Gemini model
     response = chat.send_message(question, stream=True)
-    return response
+    full_response = ""
+    for chunk in response:
+        full_response += chunk.text
+
+    return [full_response]
     
 # List of funny thinking messages
 thinking_messages = [
@@ -38,7 +57,7 @@ def get_random_thinking_message():
 
 # Initialize Streamlit app configuration
 st.set_page_config(
-    page_title="Andrew The Bot",
+    page_title="Meet Andrew",
     page_icon="🤖",
     layout="centered",
 )
@@ -129,7 +148,7 @@ st.markdown("""
 
 # Sidebar content for app introduction
 with st.sidebar:
-    st.title("About Andrew The Bot")
+    st.title("About Andrew")
     st.markdown("""
         **Andrew** is an AI-powered chatbot built using the Gemini Pro model. 
         It can answer various questions and tell you some funny jokes to lighten the mood.
@@ -165,8 +184,8 @@ st.markdown('<div class="chat-container">', unsafe_allow_html=True)
 
 # Input section
 with st.form(key='input_form', clear_on_submit=True):
-    user_input = st.text_area("Type your message...", "", placeholder="Type here...", key="input_box", height=50)
-    submit_button = st.form_submit_button("Send")
+    user_input = st.text_area("What's on your mind?", "", placeholder="Type here...", key="input_box", height=50)
+    submit_button = st.form_submit_button("")
 
 if submit_button and user_input:
     # Add user input to chat
