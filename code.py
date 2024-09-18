@@ -3,6 +3,7 @@ load_dotenv()  # Load environment variables
 
 import streamlit as st
 import os
+import time
 import google.generativeai as genai
 
 # Configure the API key for Google Generative AI
@@ -82,7 +83,11 @@ input_text = st.text_area("Curious about something? Ask away!", key="input", hei
 submit = st.button("Get Response")
 
 if submit and input_text:
-    response = get_gemini_response(input_text)
+    # Show thinking animation
+    with st.spinner("Andrew is thinking..."):
+        time.sleep(2)  # Simulating a delay of 2 seconds
+        response = get_gemini_response(input_text)
+
     st.session_state['chat_history'].append(("You", input_text))
 
     st.subheader("Andrew's Response")
