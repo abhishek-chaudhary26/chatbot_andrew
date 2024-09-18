@@ -93,18 +93,3 @@ if submit and input_text:
 st.subheader("Chat History")
 for role, text in st.session_state['chat_history']:
     st.write(f"{role}: {text}")
-
-st.markdown(
-    """
-    <script>
-    document.addEventListener('keydown', function(event) {
-        if (event.ctrlKey && event.key === 'Enter') {
-            const button = document.querySelector('button[class^="stButton"]');
-            if (button) {
-                button.click();
-            }
-        }
-    });
-    </script>
-    """,
-    unsafe_allow_html=True
