@@ -15,9 +15,9 @@ model = genai.GenerativeModel("gemini-pro")
 chat = model.start_chat(history=[])
 
 response = get_gemini_response(user_input)
-    response_text = ""
-    for chunk in response:
-        response_text += chunk.text
+response_text = ""
+for chunk in response:
+    response_text += chunk.text
     
 # List of funny thinking messages
 thinking_messages = [
