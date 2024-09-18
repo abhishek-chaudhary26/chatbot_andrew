@@ -80,10 +80,10 @@ st.title("Chat with Andrew")
 input_text = st.text_input("Curious about something? Ask away!", key="input")
 submit = st.button("Get Response")
 
-if submit and input_text:
-    response = get_gemini_response(input_text)
-    # Add user query to session state chat history
-    st.session_state['chat_history'].append(("You", input_text))
+if st.text_input("Press Ctrl + Enter to submit", key="hidden_input", label_visibility="collapsed"):
+    if input_text:
+        response = get_gemini_response(input_text)
+        st.session_state['chat_history'].append(("You", input_text))
     
     st.subheader("Andrew's Response")
     for chunk in response:
