@@ -40,7 +40,6 @@ with st.sidebar:
     Discover the joy of chatting with Andrew, your go-to chatbot for information, advice, and friendly conversation!
     """)
 
-
 # Custom CSS styling
 st.markdown(
     """
@@ -53,7 +52,7 @@ st.markdown(
         background-color: #333;
         color: #fff;
     }
-    .stTextInput > div > input {
+    .stTextArea > div > textarea {
         border-radius: 20px;
         border: 1px solid #ccc;
     }
@@ -77,14 +76,15 @@ if 'chat_history' not in st.session_state:
 
 st.title("Chat with Andrew")
 
-input_text = st.text_input("Curious about something? Ask away!", key="input")
+# Use only one input area
+input_text = st.text_area("Curious about something? Ask away!", key="input", height=100)
+
 submit = st.button("Get Response")
 
-if st.text_input("Press Ctrl + Enter to submit", key="hidden_input", label_visibility="collapsed"):
-    if input_text:
-        response = get_gemini_response(input_text)
-        st.session_state['chat_history'].append(("You", input_text))
-    
+if submit and input_text:
+    response = get_gemini_response(input_text)
+    st.session_state['chat_history'].append(("You", input_text))
+
     st.subheader("Andrew's Response")
     for chunk in response:
         st.write(chunk.text)
@@ -93,4 +93,3 @@ if st.text_input("Press Ctrl + Enter to submit", key="hidden_input", label_visib
 st.subheader("Chat History")
 for role, text in st.session_state['chat_history']:
     st.write(f"{role}: {text}")
-
