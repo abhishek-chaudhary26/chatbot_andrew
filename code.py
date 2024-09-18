@@ -24,7 +24,6 @@ st.set_page_config(page_title="Andrew The Bot")
 
 # Side panel with chatbot name and description
 with st.sidebar:
-    st.image("https://your-image-url-here.com/logo.png", width=100)  # Optional: Add a logo
     st.title("Andrew The Bot")
     st.write("Hello! I'm Andrew, your virtual assistant. Ask me anything!")
 
