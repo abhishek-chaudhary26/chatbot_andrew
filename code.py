@@ -63,7 +63,7 @@ if 'chat_history' not in st.session_state:
 
 st.title("Chat with Andrew")
 
-input_text = st.text_input("Your message:", key="input")
+input_text = st.text_input("Curious about something? Ask away!", key="input")
 submit = st.button("Send")
 
 if submit and input_text:
