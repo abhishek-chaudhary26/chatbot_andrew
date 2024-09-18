@@ -21,7 +21,7 @@ def get_gemini_response(question):
         return []
 
 # Initialize the Streamlit app
-st.set_page_config(page_title="Meet Andrew")
+st.set_page_config(page_title="Meet Pixella")
 
 # Side panel with chatbot name and description
 with st.sidebar:
